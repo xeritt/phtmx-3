@@ -19,19 +19,3 @@ export const on_by_name = (eventName, name, handler) =>{
 		addListenerElement(el, (e)=>handler(el), eventName)
 	})
 }
-
-
-/* old
-export const $ = (name) =>doc.querySelector(name)
-export const $$ = (name) =>doc.querySelectorAll(name)
-export const id = (id) => doc.getElementById(id)
-export const name = (name) => $(`[data-name='${name}']`)
-export const names = (name) => $$(`[data-name='${name}']`)
-//export const data = (name) => $$(`[data-name='${name}']`)
-export const val = (n) => name(n)?.dataset.value
-export const innerHTML = (n) => name(n)?.innerHTML
-
-export const idinner = (i) => id(i)?.innerHTML
-export const idval = (i) => id(i)?.dataset.value
-export const handler = (n, h) =>{$$(`[${n}]`).forEach(e => h(e))}
-*/

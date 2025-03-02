@@ -4,20 +4,6 @@ import * as $ from "./modules/selector.js"
 import {addDynamicElements, setRequestOnLoad} from "./modules/listener_1.js"
 
 log("Start")
-/*
-const doc = document
-const $ = (name) =>doc.querySelector(name)
-const $$ = (name) =>doc.querySelectorAll(name)
-const $id = (id) => doc.getElementById(id)
-const $name = (name) => $(`[data-name='${name}']`)
-const $$name = (name) => $$(`[data-name='${name}']`)
-const $val = (name) => $name(name)?.dataset.value
-const $innerHTML = (name) => $name(name)?.innerHTML
-
-const $idinner = (id) => $id(id)?.innerHTML
-const $idval = (id) => $id(id)?.dataset.value
-const $handler = (n, h) =>{$$(`[${n}]`).forEach(e => h(e))}
-*/
 log($.data("Her"))
 log($.val("Her"))
 log($.innerHTML("hello"))
@@ -103,7 +89,6 @@ function computeInner() {
 computeInner()
 
 //jsnlog(storage.vars) 
-
 //console.dir(storage.vars.values())
 //jsnlog(storage)
 //jsnlog(get('hello'))
