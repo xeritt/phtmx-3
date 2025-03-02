@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	</head>
+	<body>
+		<span data-log="Логирование работает"
+			data-uppercase
+		>Start</span>
+		<span id="test" data-name="hello" data-value="1">1</span>
+		<span data-name="world" data-value="5">5</span>
+		<span 
+			data-name="result"
+			data-func="minus"
+			data-args="hello, world"
+			data-target="innerHTML"
+			data-source="innerHTML"></span>
+		<span 
+			data-name="result2"
+			data-func="add"
+			data-target="innerHTML"
+			data-source="innerHTML"
+			data-args="hello, world"
+		></span>
+		<form>
+			<div class="item">
+				<label for="name">Товар 1 : </label>
+				<input type="text" name="count" id="item1" value="1"
+					data-name="item"
+					data-value="12"
+					data-result="sum"
+					required 
+				 />
+			</div>
+			<div class="item">
+				<label for="name">Товар 2 : </label>
+				<input type="text" name="count" id="item2" value="1"
+					data-name="item"
+					data-value="13"
+					data-result="sum"
+				required />
+			</div>
+			<div class="sum">
+				<label for="name">Итог: </label>
+				<input type="text" name="result" required 
+					data-name="sum"
+					data-sum="sum"
+					data-args="item"
+					disabled
+				/>
+			</div>
+			<div class="form-submit">
+				<input type="button" value="Посчитать" 
+					data-name="clicksum"
+					data-result="sum"
+					data-args="item"
+				/>
+			</div>
+		</form>
+
+		<button id="button_load_htmx" 
+		class="loadText" 
+		data-url="test.html" 
+		data-target="htmx"
+		data-timeout="0"
+		data-confirm="Do you realy want?"
+		>Load htmx</button>
+		<div id="htmx"></div>
+		
+		<script type="module" src="./js/index.js"></script> 
+	</body>
+</html>
