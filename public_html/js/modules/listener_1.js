@@ -1,5 +1,10 @@
-let debug = true;
-export function setDebug(val){ debug = val; } 
+import {DEBUG} from "./constant.js"
+//import {log, err} from "./logs.js"
+
+let debug = DEBUG;
+const VERSION = 2;
+export function version(){ return VERSION } 
+export function setDebug(val){ debug = val} 
 export function log(mes) {if (debug) console.log(mes) }
 export function logerr(mes) {if (debug) console.error(mes) }
 export function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
@@ -96,6 +101,19 @@ export function addLoadAll() {
     addLoadDynamicStyleAll(names.loadDynamicStyleAll);
 }
 
+/**
+ * Функция вызова обработчиков 
+ * 
+ */
+let dynamicHandlers = null
+
+export function setDynamicHandlers(handlersFunction) {
+	dynamicHandlers = handlersFunction
+}
+export function getDynamicHandlers() {
+	return dynamicHandlers
+}
+
 /** Запускает по интервалу сканирование классов для подключения 
  *  новых обработчиков если есть запрос на загрузку в 
  *  переменной requestOnLoad 
@@ -109,12 +127,15 @@ export function addDynamicElements(delay) {
         if (getRequestOnLoad()){
             log('addLoadAll Request');
             addLoadAll();
+						if (dynamicHandlers) dynamicHandlers()
             setRequestOnLoad(false);
         }    
     };
     //resolve();
     setInterval(resolve, delay);
 }
+
+
 
 export function addListener(itemId, resolve, eventName = 'click') {
     let element = document.getElementById(itemId);
@@ -196,9 +217,9 @@ export function addLoadText(itemId, container, url, timeout = 0) {
         e.preventDefault();
         //e.classList.add("pressed");
         let div = document.getElementById(container);
-        //console.error('Click!' + container);
+        //logerr('Click!' + container);
         if (!div) {
-            console.error('Error!. No target div id=' + container);
+            logerr('Error!. No target div id=' + container);
             return;
         }
         let params = prepareParams(button);
@@ -228,7 +249,7 @@ export async function loadDynamic(container, url, timeout = 0) {
     log('Start Dyn Load to container id=' + container);
     let div = document.querySelector(container);
     if (!div) {
-        console.error('No container ' + container + ' to load');
+        logerr('No container ' + container + ' to load');
         return;
     }
     if (timeout>0) await sleep(timeout);
@@ -292,7 +313,7 @@ export function addLoadTextMenuItem(menu, item, containerId, url, timeout = 0) {
                     });
 
         } catch (error) {
-            console.error(`Download error: ${error.message}`);
+            logerr(`Download error: ${error.message}`);
         }
     });
 }
@@ -448,7 +469,7 @@ export function addLoadDialog(item) {
         let div = document.getElementById(container);
         log('Click!' + container);
         if (!div) {
-            console.error('Error!. No target div id=' + container);
+            logerr('Error!. No target div id=' + container);
             return;
         }
         let params = prepareParams(button);
@@ -479,7 +500,7 @@ export function addLoadDialog(item) {
                             sc.setAttribute("type", "text/javascript"); 
                             document.head.appendChild(sc);
                         } catch (error) {
-                          logerr(error);
+                         logerr(error);
                         }
                     }
                     
@@ -684,7 +705,7 @@ export function addLoadDynamicTextAll(className = '.loadDynamicText') {
         //setRequestOnLoad(false);
         let div = document.querySelector('#' + item.dataset.target);
         if (!div) {
-            console.error('No container ' + container + ' to load');
+            logerr('No container ' + container + ' to load');
             return;
         }
         //await sleep(item.dataset.timeout);
@@ -740,7 +761,7 @@ export function addLoadDynamicStyleAll(className = '.loadDynamicStyle') {
         log('loadDynamicStyle id= ' + item.dataset.class);
         let div = document.querySelector('#' + item.dataset.target);
         if (!div) {
-            console.error('No container ' + container + ' to load style');
+            logerr('No container ' + container + ' to load style');
             return;
         }
         

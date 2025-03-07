@@ -5,6 +5,9 @@
 		}
 	],
 	"settings": {
-		"editor.cursorStyle":"line",
+		"workbench.colorCustomizations" : {
+			"terminal.foreground" : "#00f604",
+			"terminal.background" : "#000000"
+		}
 	}
 }

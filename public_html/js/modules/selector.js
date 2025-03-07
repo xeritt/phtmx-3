@@ -1,4 +1,4 @@
-import {addListenerElement} from "./listener_1.js";
+import {addListenerElement} from "./listener_1.js"
 
 const doc = document
 export const $ = (name) =>doc.querySelector(name)
