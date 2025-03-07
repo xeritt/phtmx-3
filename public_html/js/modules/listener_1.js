@@ -1,8 +1,8 @@
-import {DEBUG} from "./constant.js"
+import {DEBUG, VERSION} from "./constant.js"
 //import {log, err} from "./logs.js"
 
 let debug = DEBUG;
-const VERSION = 2;
+//const VERSION = 2;
 export function version(){ return VERSION } 
 export function setDebug(val){ debug = val} 
 export function log(mes) {if (debug) console.log(mes) }
@@ -102,7 +102,7 @@ export function addLoadAll() {
 }
 
 /**
- * Функция вызова обработчиков 
+ * Функция вызова обработчиков от пользователей 
  * 
  */
 let dynamicHandlers = null

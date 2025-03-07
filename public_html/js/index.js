@@ -5,7 +5,7 @@ import {addDynamicElements, setDynamicHandlers, setRequestOnLoad} from "./module
 
 const allHandlers = () =>{
 	$.handler('data-log', (el) => {log(el.dataset.log)})
-  $.handler('data-uppercase', (el) => {el.innerHTML = el.innerHTML.toUpperCase()})
+  $.handler_once('data-uppercase', (el) => {el.innerHTML = el.innerHTML.toUpperCase()})
 	$.handler('data-sum', sum)
 	$.on_by_name('change', 'item', onsumitem)
 	$.on_by_name('click', 'clicksum', onsumitem)
@@ -16,5 +16,5 @@ window.addEventListener('load', (event) => {
 	log('The page has fully loaded');
 	setRequestOnLoad(true)
 	setDynamicHandlers(allHandlers)
-	addDynamicElements(500)  
+	addDynamicElements(500)
 });

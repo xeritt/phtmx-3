@@ -13,6 +13,18 @@ export const innerHTML = (name) => data(name)?.innerHTML
 export const el_innerHTML = (id) => el(id)?.innerHTML
 export const el_val = (id) => el(id)?.dataset.value
 export const handler = (n, h) =>{$$(`[${n}]`).forEach(e => h(e))}
+export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => 
+	{
+		if (e.dataset.handler){
+			if (e.dataset.handler.indexOf(n) === 0) return;
+		}   
+		h(e); 
+		if (e.dataset.handler)
+			e.dataset.handler += n + ' ';
+		else 
+			e.dataset.handler = n + ' ';
+	}
+)}
 
 export const on_by_name = (eventName, name, handler) =>{
 	datas(name).forEach(el =>{
