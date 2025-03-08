@@ -9,12 +9,13 @@ const allHandlers = () =>{
 	$.handler('data-sum', sum)
 	$.on_by_name('change', 'item', onsumitem)
 	$.on_by_name('click', 'clicksum', onsumitem)
+	$.handler('data-alert', (el) => {alert(el.dataset.alert)})
 	computeInner()
 }
 
 window.addEventListener('load', (event) => {
-	log('The page has fully loaded');
+	log('The page has fully loaded')
 	setRequestOnLoad(true)
 	setDynamicHandlers(allHandlers)
 	addDynamicElements(500)
-});
+})
