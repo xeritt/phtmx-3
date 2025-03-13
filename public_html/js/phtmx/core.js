@@ -63,6 +63,11 @@ export const on_by_name = (eventName, name, handler) =>{
 export const selector_handler = (n, h) =>{$$(`${n}`).forEach(e => h(e))}
 export const selector_handler_once = (n, h) =>{$$(`${n}`).forEach(e => {once(e, n, h)})}
 
+export const on_selector = (eventName, name, handler) =>{
+	$$(name).forEach(el =>{
+		addListenerElement(el, (e)=>handler(el), eventName)
+	})
+}
 /* Загрузка обработчиков */
 /**
  * 
@@ -95,7 +100,7 @@ export function getDynamicHandlers() {
 export function addDynamicElements(delay) {
 	  setRequestOnLoad(true);
     let resolve = () => {
-        log('addDynamicElements');
+        log('addDynamicElements!');
         if (getRequestOnLoad()){
             //log('addLoadAll Request');
             //addLoadAll();
@@ -133,7 +138,7 @@ export function addListenerElement(element, resolve, eventName = 'click') {
     if (element.dataset.listener){
         if (element.dataset.listener.indexOf(eventName) === 0) return;
     }    
-    log('Element Add Listener = ' + element.id);
+    log('Element Add Listener = ' + element.tagName);
     element.addEventListener(eventName, resolve);
     if (element.dataset.listener)
         element.dataset.listener += ' ' + eventName;

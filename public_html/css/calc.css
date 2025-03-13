@@ -1,0 +1,21 @@
+.calc{
+	width: 220px;
+}
+.btns {
+	display: flex;
+	justify-content: space-between;
+	
+}
+
+.btns button{
+	width: 50px;
+	height: 50px;
+	margin: 5px 0px 0px 0px;
+	border: 1px solid gray;
+}
+
+.btns_big{
+	width: 106px !important;
+	/*height: 50px;
+	margin: 5px 0px 0px 0px;*/
+}

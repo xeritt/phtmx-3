@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset='utf-8'>
+	<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+	<title>Calc</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1'>
+	<link rel='stylesheet' type='text/css' media='screen' href='/css/calc.css'>
+	
+</head>
+<body>
+	<span data-log="Core work done..."></span>
+	<div class="calc">
+		<div>
+			<input name="result" value="0" data-name="result" data-arg="arg">
+			<spin data-name="arg" data-value="" data-action=""></spin>
+			<br />
+		</div>	
+		<div class="btns">
+			<button data-calc="result">7</button>
+			<button data-calc="result">8</button>
+			<button data-calc="result">9</button>
+			<button data-res="result" data-func="sin" data-one="true">sin x</button>
+		</div>
+		<div class="btns">
+			<button data-calc="result">4</button>
+			<button data-calc="result">5</button>
+			<button data-calc="result">6</button>
+			<button data-res="result" data-func="cos" data-one="true">cos x</button>
+		</div>
+		<div class="btns">
+			<button data-calc="result">1</button>
+			<button data-calc="result">2</button>
+			<button data-calc="result">3</button>
+			<button data-res="result" data-func="tan" data-one="true">tan x</button>
+		</div>
+		<div class="btns">
+			<button data-calc="result" class="btns_big">0</button>
+			<button data-del="result">DEL</button>
+			<button data-reset="true" data-res="result">CLR</button>
+		</div>
+		<div class="btns">
+			<button data-res="result" data-func="plus">+</button>
+			<button data-res="result" data-func="minus">-</button>
+			<button data-res="result" data-func="multi">*</button>
+			<button data-res="result" data-func="divide">/</button>
+			
+		</div>
+		<div class="btns">
+			<button data-ravno="true" data-res="result">=</button>
+			<button data-calc="result">.</button>
+			<button data-calc="result"></button>			
+			<button data-calc="result"></button>
+		</div>
+	</div>
+
+	<div class="calc">
+		<div>
+			<input name="result2" value="0" data-name="result2" data-arg="arg2">
+			<spin data-name="arg2" data-value="" data-action=""></spin>
+			<br />
+		</div>	
+		<div class="btns">
+			<button data-calc="result2">7</button>
+			<button data-calc="result2">8</button>
+			<button data-calc="result2">9</button>
+			<button data-res="result2" data-func="sin" data-one="true">sin x</button>
+		</div>
+		<div class="btns">
+			<button data-calc="result2">4</button>
+			<button data-calc="result2">5</button>
+			<button data-calc="result2">6</button>
+			<button data-res="result2" data-func="cos" data-one="true">cos x</button>
+		</div>
+		<div class="btns">
+			<button data-calc="result2">1</button>
+			<button data-calc="result2">2</button>
+			<button data-calc="result2">3</button>
+			<button data-res="result2" data-func="tan" data-one="true">tan x</button>
+		</div>
+		<div class="btns">
+			<button data-calc="result2" class="btns_big">0</button>
+			<button data-del="result2">DEL</button>
+			<button data-reset="true" data-res="result2">CLR</button>
+		</div>
+		<div class="btns">
+			<button data-res="result2" data-func="plus">+</button>
+			<button data-res="result2" data-func="minus">-</button>
+			<button data-res="result2" data-func="multi">*</button>
+			<button data-res="result2" data-func="divide">/</button>
+			
+		</div>
+		<div class="btns">
+			<button data-ravno="ture" data-res="result2">=</button>
+			<button data-calc="result2">.</button>
+			<button data-calc="result2"></button>			
+			<button data-calc="result2"></button>
+		</div>
+	</div>
+	<script src='./js/calc.js'></script>
+</body>
+</html>
