@@ -1,7 +1,7 @@
 //import {DEBUG, VERSION} from "./constant.js"
 //import {log, err} from "./logs.js"
 export const DEBUG = 0
-export const VERSION = 2;
+export const VERSION = 3;
 
 let debug = DEBUG;
 //const VERSION = 2;
@@ -26,11 +26,11 @@ export function jsnlog (map) {
 	log(jsn(obj))
 }
 */
-const doc = document
+//const doc = document
 /** Селекторы */
-export const $ = (name) =>doc.querySelector(name)
-export const $$ = (name) =>doc.querySelectorAll(name)
-export const el = (id) => doc.getElementById(id)
+export const $ = (name, doc = document) => doc.querySelector(name)
+export const $$ = (name, doc = document) => doc.querySelectorAll(name)
+export const el = (id, doc = document) => doc.getElementById(id)
 export const data = (name) => $(`[data-name='${name}']`)
 export const datas = (name) => $$(`[data-name='${name}']`)
 //export const data = (name) => $$(`[data-name='${name}']`)
@@ -156,4 +156,13 @@ export async function execApi(formData, path){
 	let result = await response.text();//json();
 	
 	return result;
+}
+
+export const component = (el) =>{
+	let parent = el.parentElement
+	while(parent.nodeName != 'BODY'){
+		if (parent.dataset?.component) break
+		parent = parent.parentElement
+	}
+	return parent
 }
