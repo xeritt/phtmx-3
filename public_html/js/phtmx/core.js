@@ -54,15 +54,49 @@ const once = (e, name, handler) => {
 
 export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => {once(e, n, h)})}
 
+/**
+ * Обработчик на eventName по имени data-name = name
+ * повешан один раз
+ * <button data-name="func">8</button>
+ * on_by_name('func', async (el) => { })
+ * @param {*} eventName 
+ * @param {*} name 
+ * @param {*} handler 
+ */
 export const on_by_name = (eventName, name, handler) =>{
 	datas(name).forEach(el =>{
 		addListenerElement(el, (e)=>handler(el), eventName)
 	})
 }
 
+/**
+ * Совершаются вычисления при каждм setRequestOnLoad(true)
+ * <button data-func="true">Load</button> 
+ * selector_handler('[data-func]', async (el) => { })
+ * @param {*} n 
+ * @param {*} h 
+ */
 export const selector_handler = (n, h) =>{$$(`${n}`).forEach(e => h(e))}
+
+/**
+ * Совершаются вычисления один раз за все жизнь документа
+ * при каждом setRequestOnLoad(true)
+ * <button data-func="true">Load</button> 
+ * selector_handler_once('[data-func]', async (el) => { })
+ * @param {*} n 
+ * @param {*} h 
+ */
 export const selector_handler_once = (n, h) =>{$$(`${n}`).forEach(e => {once(e, n, h)})}
 
+/**
+ * Обработчик на eventName по имени name = [data-$attrname]
+ * повешан один раз
+ * <button data-loadtext="calc3" data-url="/calc3.html">Load</button> 
+ * on_selector('click', '[data-loadtext]', async (el) => { })
+ * @param {*} eventName 
+ * @param {*} name 
+ * @param {*} handler 
+ */
 export const on_selector = (eventName, name, handler) =>{
 	$$(name).forEach(el =>{
 		addListenerElement(el, (e)=>handler(el), eventName)
@@ -146,10 +180,10 @@ export function addListenerElement(element, resolve, eventName = 'click') {
         element.dataset.listener = eventName;
 }
 
-export async function execApi(formData, path){
+export async function execApi(formData, path, method = 'POST'){
 
 	let response = await fetch(path, {
-			method: 'POST',
+			method: method,
 			body: formData
 	}).catch((error) => console.log(error));
 	
