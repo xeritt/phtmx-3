@@ -31,14 +31,14 @@ export function jsnlog (map) {
 export const $ = (name, doc = document) => doc.querySelector(name)
 export const $$ = (name, doc = document) => doc.querySelectorAll(name)
 export const el = (id, doc = document) => doc.getElementById(id)
-export const data = (name) => $(`[data-name='${name}']`)
-export const datas = (name) => $$(`[data-name='${name}']`)
+export const data = (name, doc = document) => $(`[data-name='${name}']`, doc)
+export const datas = (name, doc = document) => $$(`[data-name='${name}']`, doc)
 //export const data = (name) => $$(`[data-name='${name}']`)
-export const val = (name) => data(name)?.dataset.value
-export const innerHTML = (name) => data(name)?.innerHTML
+export const val = (name, doc = document) => data(name, doc)?.dataset.value
+export const innerHTML = (name, doc = document) => data(name, doc)?.innerHTML
 
-export const el_innerHTML = (id) => el(id)?.innerHTML
-export const el_val = (id) => el(id)?.dataset.value
+export const el_innerHTML = (id, doc = document) => el(id, doc)?.innerHTML
+export const el_val = (id, doc = document) => el(id, doc)?.dataset.value
 export const handler = (n, h) =>{$$(`[${n}]`).forEach(e => h(e))}
 
 const once = (e, name, handler) => {

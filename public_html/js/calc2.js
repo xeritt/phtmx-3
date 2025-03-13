@@ -6,12 +6,12 @@ async function load(){
 		const result = (el) => {
 			let comp = phtmx.component(el)
 			let name = comp.dataset.result
-			return phtmx.$(`[data-name=${name}]`, comp)
+			return phtmx.data(name, comp)
 		}
 		const argument = (el) => { 
 			let comp = phtmx.component(el)
 			let name = comp.dataset.arg
-			return phtmx.$(`[data-name=${name}]`, comp)
+			return phtmx.data(name, comp)
 		}
 		const format = (x) => parseFloat(x)
 
