@@ -158,6 +158,12 @@ export async function execApi(formData, path){
 	return result;
 }
 
+/**
+ * Выдает parent елемент который содержит
+ * data-companent
+ * @param {*} el 
+ * @returns 
+ */
 export const component = (el) =>{
 	let parent = el.parentElement
 	while(parent.nodeName != 'BODY'){

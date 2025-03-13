@@ -3,9 +3,26 @@ async function load(){
 
 	const calcHandlers = () =>{
 		phtmx.handler('data-log', (el) => {phtmx.log(el.dataset.log)})
-		const result = (el) => phtmx.$('[data-name=result]', phtmx.component(el))
-		const argument = (el) => phtmx.$('[data-name=arg]', phtmx.component(el))
-		const format = (x) => parseFloat(x)		
+		const result = (el) => {
+			let comp = phtmx.component(el)
+			let name = comp.dataset.result
+			return phtmx.$(`[data-name=${name}]`, comp)
+		}
+		const argument = (el) => { 
+			let comp = phtmx.component(el)
+			let name = comp.dataset.arg
+			return phtmx.$(`[data-name=${name}]`, comp)
+		}
+		const format = (x) => parseFloat(x)
+
+		phtmx.on_selector('click', '[data-loadtext]', async (el) => {
+			const response = await fetch(el.dataset.url)
+			const text = await response.text();
+			let target = phtmx.data(el.dataset.loadtext)
+			target.innerHTML = text
+			phtmx.setRequestOnLoad(true)
+			//phtmx.log(text)
+		})
 
 		phtmx.on_selector('click', '[data-calc]', (el) => {
 			let res = result(el)
@@ -21,7 +38,7 @@ async function load(){
 			}	
 		})
 		
-		const clearArg = (el) =>{
+		const clearArg = (el) => {
 			let arg = argument(el)
 			arg.innerHTML = ''
 			arg.dataset.one = ''
@@ -35,14 +52,14 @@ async function load(){
 			clearArg(el)
 		})
 		
-		const exec = (name, a, b) =>{
+		const exec = (name, a, b) => {
 			if (name == 'plus') return a + b
 			if (name == 'minus') return a - b
 			if (name == 'multi') return a * b
 			if (name == 'divide') return a / b
 		}
 
-		const execOne = (name, a ) =>{
+		const execOne = (name, a ) => {
 			if (name == 'sin') return Math.sin(a)
 			if (name == 'cos') return Math.cos(a)
 			if (name == 'tan') return Math.tan(a)
@@ -93,18 +110,23 @@ async function load(){
 			let val = res.value
 			res.value = val.substring(0, val.length - 1);
 			if (val.length == 0) res.value = 0
-		})	
+		})
+		
 	}
 
-	const cals2Hadlesrs = () =>{
-		phtmx.on_selector('click', '[data-calc]', (el) => {
+	const calcHandlers2 = () =>{
+		phtmx.on_selector('click', '[data-calc]', async (el) => {
+			const response = await fetch('/calc.html')
+			const text = await response.text();
+			phtmx.log(text)
+			/*
 			let comp = compnent(el)
 			phtmx.log(comp)
 			let res = phtmx.$('[data-name=result]', comp)
 			let arg = phtmx.$('[data-name=arg]', comp)
 			phtmx.log(res)
 			phtmx.log(arg)
-
+			*/
 		})	
 
 	}
