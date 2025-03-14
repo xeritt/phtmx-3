@@ -39,7 +39,15 @@ export const innerHTML = (name, doc = document) => data(name, doc)?.innerHTML
 
 export const el_innerHTML = (id, doc = document) => el(id, doc)?.innerHTML
 export const el_val = (id, doc = document) => el(id, doc)?.dataset.value
-export const handler = (n, h) =>{$$(`[${n}]`).forEach(e => h(e))}
+
+
+/** Вешается обработчик на наличие data-$name в атрибутах
+ * <span data-log="Core work done..."></span>
+ * phtmx.handler('data-log', (el) => {phtmx.log(el.dataset.log)})
+ * @param {*} name 
+ * @param {*} func 
+ */
+export const handler = (name, func) =>{$$(`[${name}]`).forEach(e => func(e))}
 
 const once = (e, name, handler) => {
 	if (e.dataset.handler){
@@ -199,10 +207,25 @@ export async function execApi(formData, path, method = 'POST'){
  * @returns 
  */
 export const component = (el) =>{
+	//Если елемент сам компанент
+	if (el.dataset?.component) return el;
+
 	let parent = el.parentElement
 	while(parent.nodeName != 'BODY'){
 		if (parent.dataset?.component) break
 		parent = parent.parentElement
 	}
 	return parent
+}
+
+export const loadText = async (url) =>{
+	const response = await fetch(url)
+	if (!response.ok) {
+		const message = `An error has occured: ${response.status} url: ${el.dataset.url}`;
+		phtmx.logerr(message)
+		return message;
+	} else {
+		const text = await response.text();
+		return text
+	}	
 }

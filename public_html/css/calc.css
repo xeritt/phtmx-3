@@ -1,6 +1,7 @@
 .calc{
 	width: 220px;
 }
+
 .btns {
 	display: flex;
 	justify-content: space-between;
@@ -18,4 +19,12 @@
 	width: 106px !important;
 	/*height: 50px;
 	margin: 5px 0px 0px 0px;*/
+}
+
+.pics{
+	width: 400px;
+}
+
+.picture{
+	height: 400px;
 }

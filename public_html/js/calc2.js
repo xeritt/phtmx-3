@@ -17,10 +17,18 @@ async function load(){
 
 		phtmx.on_selector('click', '[data-loadtext]', async (el) => {
 			const response = await fetch(el.dataset.url)
-			const text = await response.text();
 			let target = phtmx.data(el.dataset.loadtext)
-			target.innerHTML = text
-			phtmx.setRequestOnLoad(true)
+			if (!response.ok) {
+				const message = `An error has occured: ${response.status} url: ${el.dataset.url}`;
+				//throw new Error(message);
+				phtmx.logerr(message)
+				target.innerHTML = message
+			} else {
+				const text = await response.text();
+				
+				target.innerHTML = text
+				phtmx.setRequestOnLoad(true)
+			}	
 			//phtmx.log(text)
 		})
 
@@ -63,6 +71,7 @@ async function load(){
 			if (name == 'sin') return Math.sin(a)
 			if (name == 'cos') return Math.cos(a)
 			if (name == 'tan') return Math.tan(a)
+			if (name == 'sqrt') return Math.sqrt(a)
 		}
 		
 		phtmx.on_selector('click', '[data-func]', (el) => {
