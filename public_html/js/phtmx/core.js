@@ -2,11 +2,11 @@ export const DEBUG = 0
 export const VERSION = 3.1;
 let debug = DEBUG;
 /** Служебные */
-export function version(){ return VERSION } 
-export function setDebug(val){ debug = val} 
-export function log(mes) {if (debug) console.log(mes) }
-export function logerr(mes) {if (debug) console.error(mes) }
-export function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
+export function version() { return VERSION }
+export function setDebug(val) { debug = val }
+export function log(mes) { if (debug) console.log(mes) }
+export function logerr(mes) { if (debug) console.error(mes) }
+export function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
 
 /** Селекторы */
 
@@ -39,13 +39,13 @@ export const innerHTML = (name, doc = document) => data(name, doc)?.innerHTML
  * @returns 
  */
 const once = (el, name, func) => {
-	if (el.dataset.handler){
+	if (el.dataset.handler) {
 		if (el.dataset.handler.indexOf(name) === 0) return;
-	}   
-	func(el); 
+	}
+	func(el);
 	if (el.dataset.handler)
 		el.dataset.handler += name + ' ';
-	else 
+	else
 		el.dataset.handler = name + ' ';
 }
 
@@ -56,7 +56,7 @@ const once = (el, name, func) => {
  * @param {*} name 
  * @param {*} func 
  */
-export const selector_handler = (name, func) =>{$$(`${name}`).forEach(el => func(el))}
+export const selector_handler = (name, func) => { $$(`${name}`).forEach(el => func(el)) }
 
 /**
  * Совершаются вычисления один раз за всю жизнь документа
@@ -66,7 +66,7 @@ export const selector_handler = (name, func) =>{$$(`${name}`).forEach(el => func
  * @param {*} name 
  * @param {*} func 
  */
-export const selector_handler_once = (name, func) =>{$$(`${name}`).forEach(el => {once(el, name, func)})}
+export const selector_handler_once = (name, func) => { $$(`${name}`).forEach(el => { once(el, name, func) }) }
 
 /**Упрощенная версия selector_handler с [name] чтобы гарантировать поиск
  * только по атрибутам 
@@ -77,7 +77,7 @@ export const selector_handler_once = (name, func) =>{$$(`${name}`).forEach(el =>
  * @param {*} func 
  */
 //export const handler = (name, func) =>{$$(`[${name}]`).forEach(e => func(e))}
-export const handler = (name, func) =>{selector_handler(`[${name}]`, func)}
+export const handler = (name, func) => { selector_handler(`[${name}]`, func) }
 
 
 //export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => {once(e, n, h)})}
@@ -87,7 +87,7 @@ export const handler = (name, func) =>{selector_handler(`[${name}]`, func)}
  * @param {*} name 
  * @param {*} func 
  */
-export const handler_once = (name, func) =>{selector_handler_once(`[${name}]`, func)}
+export const handler_once = (name, func) => { selector_handler_once(`[${name}]`, func) }
 
 /**
  * Обработчик на eventName по имени data-name = name
@@ -98,9 +98,9 @@ export const handler_once = (name, func) =>{selector_handler_once(`[${name}]`, f
  * @param {*} name 
  * @param {*} handler 
  */
-export const on_by_name = (eventName, name, handler) =>{
-	datas(name).forEach(el =>{
-		addListenerElement(el, (e)=>handler(el), eventName)
+export const on_by_name = (eventName, name, handler) => {
+	datas(name).forEach(el => {
+		addListenerElement(el, (e) => handler(el), eventName)
 	})
 }
 
@@ -113,9 +113,9 @@ export const on_by_name = (eventName, name, handler) =>{
  * @param {*} name 
  * @param {*} handler 
  */
-export const on_selector = (eventName, name, handler) =>{
-	$$(name).forEach(el =>{
-		addListenerElement(el, (e)=>handler(el), eventName)
+export const on_selector = (eventName, name, handler) => {
+	$$(name).forEach(el => {
+		addListenerElement(el, (e) => handler(el), eventName)
 	})
 }
 /* Загрузка обработчиков */
@@ -124,8 +124,8 @@ export const on_selector = (eventName, name, handler) =>{
  * @type Boolean|val запрос на запуск команды AddLoadAll
  */
 export let requestOnLoad = false;
-export function getRequestOnLoad(){ return requestOnLoad; }
-export function setRequestOnLoad(val){ requestOnLoad = val; }
+export function getRequestOnLoad() { return requestOnLoad; }
+export function setRequestOnLoad(val) { requestOnLoad = val; }
 
 /**
  * Функция вызова обработчиков от пользователей 
@@ -149,18 +149,18 @@ export function getDynamicHandlers() {
  * @returns {undefined}
  */
 export function addDynamicElements(delay) {
-	  setRequestOnLoad(true);
-    let resolve = () => {
-        log('addDynamicElements!');
-        if (getRequestOnLoad()){
-            //log('addLoadAll Request');
-            //addLoadAll();
-						if (dynamicHandlers) dynamicHandlers()
-            setRequestOnLoad(false);
-        }    
-    };
-    //resolve();
-    setInterval(resolve, delay);
+	setRequestOnLoad(true);
+	let resolve = () => {
+		log('addDynamicElements!');
+		if (getRequestOnLoad()) {
+			//log('addLoadAll Request');
+			//addLoadAll();
+			if (dynamicHandlers) dynamicHandlers()
+			setRequestOnLoad(false);
+		}
+	};
+	//resolve();
+	setInterval(resolve, delay);
 }
 
 /**Устанавливает listener(resolve) на событие eventName
@@ -171,17 +171,17 @@ export function addDynamicElements(delay) {
  * @param {*} eventName 
  */
 export function addListener(itemId, resolve, eventName = 'click') {
-    let element = document.getElementById(itemId);
-    if (!element) return;
-    //if (element.dataset.listener == eventName) return;
-    if (element.dataset.listener){
-        if (element.dataset.listener.indexOf(eventName) === 0) return;
-    }    
-    element.addEventListener(eventName, resolve);
-    if (element.dataset.listener)
-        element.dataset.listener += eventName + ' ';
-    else 
-        element.dataset.listener = eventName + ' ';
+	let element = document.getElementById(itemId);
+	if (!element) return;
+	//if (element.dataset.listener == eventName) return;
+	if (element.dataset.listener) {
+		if (element.dataset.listener.indexOf(eventName) === 0) return;
+	}
+	element.addEventListener(eventName, resolve);
+	if (element.dataset.listener)
+		element.dataset.listener += eventName + ' ';
+	else
+		element.dataset.listener = eventName + ' ';
 }
 
 /**Устанавливает listener(resolve) на событие eventName
@@ -192,26 +192,26 @@ export function addListener(itemId, resolve, eventName = 'click') {
  * @param {type} eventName
  */
 export function addListenerElement(element, resolve, eventName = 'click') {
-    if (element.dataset.listener){
-        if (element.dataset.listener.indexOf(eventName) === 0) return;
-    }    
-    log('Element Add Listener = ' + element.tagName);
-    element.addEventListener(eventName, resolve);
-    if (element.dataset.listener)
-        element.dataset.listener += ' ' + eventName;
-    else 
-        element.dataset.listener = eventName;
+	if (element.dataset.listener) {
+		if (element.dataset.listener.indexOf(eventName) === 0) return;
+	}
+	log('Element Add Listener = ' + element.tagName);
+	element.addEventListener(eventName, resolve);
+	if (element.dataset.listener)
+		element.dataset.listener += ' ' + eventName;
+	else
+		element.dataset.listener = eventName;
 }
 
-export async function execApi(formData, path, method = 'POST'){
+export async function execApi(formData, path, method = 'POST') {
 
 	let response = await fetch(path, {
-			method: method,
-			body: formData
-	}).catch((error) => console.log(error));
-	
+		method: method,
+		body: formData
+	}).catch((error) => logerr(error));
+
 	let result = await response.text();//json();
-	
+
 	return result;
 }
 
@@ -221,12 +221,12 @@ export async function execApi(formData, path, method = 'POST'){
  * @param {*} el 
  * @returns 
  */
-export const component = (el) =>{
+export const component = (el) => {
 	//Если елемент сам компанент
 	if (el.dataset?.component) return el;
 
 	let parent = el.parentElement
-	while(parent.nodeName != 'BODY'){
+	while (parent.nodeName != 'BODY') {
 		if (parent.dataset?.component) break
 		parent = parent.parentElement
 	}
@@ -237,14 +237,14 @@ export const component = (el) =>{
  * @param {*} url 
  * @returns 
  */
-export const loadText = async (url) =>{
+export const loadText = async (url) => {
 	const response = await fetch(url)
 	if (!response.ok) {
 		const message = `An error has occured: ${response.status} url: ${el.dataset.url}`;
-		phtmx.logerr(message)
+		logerr(message)
 		return message;
 	} else {
 		const text = await response.text();
 		return text
-	}	
+	}
 }
