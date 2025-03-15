@@ -9,11 +9,24 @@
 	
 </head>
 <body>
+	<!--
+	Data attributes:
+	data-log
+	data-component & data-pic & data-url & data-list & data-current
+	data-btnstart
+	data-btnback
+	data-btngo
+	data-btnend
+
+	Data varibales:
+	data-name="pic"
+	data-name="info"
+	data-name="list"
+	--> 
 	<span data-log="Core work done..."></span>
 	<div  data-component="pics" data-pic="pic" data-url="pics.txt" data-list="list" data-current="">
 		<div class="pics">
 			<img src="" data-name="pic" class="picture"/>
-			
 			<div class="btns">
 				<button data-btnstart="true" class="btns_big">В начало</button>
 				<button data-btnback="true">-1</button>
@@ -21,7 +34,7 @@
 				<button data-btnend="true" class="btns_big">В конец</button>
 			</div>
 		</div>	
-		<div align="left">url:<span data-name="info"></span></div>
+		<div align="left">url: <span data-name="info"></span></div>
 		<div data-name="list"></div>
 	</div>	
 	<script src='./js/pics.js'></script>
