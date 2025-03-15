@@ -1,72 +1,99 @@
-//import {DEBUG, VERSION} from "./constant.js"
-//import {log, err} from "./logs.js"
 export const DEBUG = 0
-export const VERSION = 3;
-
+export const VERSION = 3.1;
 let debug = DEBUG;
-//const VERSION = 2;
 /** Служебные */
 export function version(){ return VERSION } 
 export function setDebug(val){ debug = val} 
 export function log(mes) {if (debug) console.log(mes) }
 export function logerr(mes) {if (debug) console.error(mes) }
 export function sleep(ms) {return new Promise(resolve => setTimeout(resolve, ms));}
-/*
-export const isDebug = () => {return debug}
-export const nullLog = () => {}
-export const log = isDebug() ? console.log : nullLog
-export const err = isDebug() ? console.error : nullLog
-export const logerr = isDebug() ? console.error : nullLog
-export const dir = isDebug() ? console.dir : nullLog
-export const jsn = (x) => JSON.stringify(x, null, '  ')
-export function jsnlog (map) {
-	let obj = map
-	if (map instanceof Map) 
-		obj = Object.fromEntries(map.entries())
-	log(jsn(obj))
-}
-*/
-//const doc = document
+
 /** Селекторы */
+
+/**Аналог document.querySelector(name),
+ * но с возможностью изменить второй параметр и
+ * сузить поиск внутри определенного контейнера doc
+ * @param {*} name 
+ * @param {*} doc Контейнер
+ * @returns 
+ */
 export const $ = (name, doc = document) => doc.querySelector(name)
 export const $$ = (name, doc = document) => doc.querySelectorAll(name)
 export const el = (id, doc = document) => doc.getElementById(id)
+export const el_val = (id, doc = document) => el(id, doc)?.dataset.value
+export const el_innerHTML = (id, doc = document) => el(id, doc)?.innerHTML
+
+/** Селекторы data переменных */
 export const data = (name, doc = document) => $(`[data-name='${name}']`, doc)
 export const datas = (name, doc = document) => $$(`[data-name='${name}']`, doc)
-//export const data = (name) => $$(`[data-name='${name}']`)
 export const val = (name, doc = document) => data(name, doc)?.dataset.value
 export const innerHTML = (name, doc = document) => data(name, doc)?.innerHTML
 
-export const el_innerHTML = (id, doc = document) => el(id, doc)?.innerHTML
-export const el_val = (id, doc = document) => el(id, doc)?.dataset.value
+/**
+ * Вызывает func при активации setRequestOnLoad(true)
+ * и прописывает data-handler=func что-бы исключить
+ * повторный вызов
+ * @param {HTMLElement} el 
+ * @param {*} name 
+ * @param {*} func 
+ * @returns 
+ */
+const once = (el, name, func) => {
+	if (el.dataset.handler){
+		if (el.dataset.handler.indexOf(name) === 0) return;
+	}   
+	func(el); 
+	if (el.dataset.handler)
+		el.dataset.handler += name + ' ';
+	else 
+		el.dataset.handler = name + ' ';
+}
 
+/**
+ * Совершаются вычисления после setRequestOnLoad(true)
+ * <button data-func="true">Load</button> 
+ * selector_handler('[data-func]', async (el) => { })
+ * @param {*} name 
+ * @param {*} func 
+ */
+export const selector_handler = (name, func) =>{$$(`${name}`).forEach(el => func(el))}
 
-/** Вешается обработчик на наличие data-$name в атрибутах
+/**
+ * Совершаются вычисления один раз за всю жизнь документа
+ * после setRequestOnLoad(true)
+ * <button data-func="true">Load</button> 
+ * selector_handler_once('[data-func]', async (el) => { })
+ * @param {*} name 
+ * @param {*} func 
+ */
+export const selector_handler_once = (name, func) =>{$$(`${name}`).forEach(el => {once(el, name, func)})}
+
+/**Упрощенная версия selector_handler с [name] чтобы гарантировать поиск
+ * только по атрибутам 
+ * Вешается обработчик на наличие $name=data-attr в атрибутах
  * <span data-log="Core work done..."></span>
  * phtmx.handler('data-log', (el) => {phtmx.log(el.dataset.log)})
  * @param {*} name 
  * @param {*} func 
  */
-export const handler = (name, func) =>{$$(`[${name}]`).forEach(e => func(e))}
+//export const handler = (name, func) =>{$$(`[${name}]`).forEach(e => func(e))}
+export const handler = (name, func) =>{selector_handler(`[${name}]`, func)}
 
-const once = (e, name, handler) => {
-	if (e.dataset.handler){
-		if (e.dataset.handler.indexOf(name) === 0) return;
-	}   
-	handler(e); 
-	if (e.dataset.handler)
-		e.dataset.handler += name + ' ';
-	else 
-		e.dataset.handler = name + ' ';
-}
 
-export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => {once(e, n, h)})}
+//export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => {once(e, n, h)})}
+/**
+ * Упрощенная версия selector_handler_once с [name] чтобы гарантировать поиск
+ * только по атрибутам 
+ * @param {*} name 
+ * @param {*} func 
+ */
+export const handler_once = (name, func) =>{selector_handler_once(`[${name}]`, func)}
 
 /**
  * Обработчик на eventName по имени data-name = name
  * повешан один раз
  * <button data-name="func">8</button>
- * on_by_name('func', async (el) => { })
+ * on_by_name('click', 'func', async (el) => { })
  * @param {*} eventName 
  * @param {*} name 
  * @param {*} handler 
@@ -76,25 +103,6 @@ export const on_by_name = (eventName, name, handler) =>{
 		addListenerElement(el, (e)=>handler(el), eventName)
 	})
 }
-
-/**
- * Совершаются вычисления при каждм setRequestOnLoad(true)
- * <button data-func="true">Load</button> 
- * selector_handler('[data-func]', async (el) => { })
- * @param {*} n 
- * @param {*} h 
- */
-export const selector_handler = (n, h) =>{$$(`${n}`).forEach(e => h(e))}
-
-/**
- * Совершаются вычисления один раз за все жизнь документа
- * при каждом setRequestOnLoad(true)
- * <button data-func="true">Load</button> 
- * selector_handler_once('[data-func]', async (el) => { })
- * @param {*} n 
- * @param {*} h 
- */
-export const selector_handler_once = (n, h) =>{$$(`${n}`).forEach(e => {once(e, n, h)})}
 
 /**
  * Обработчик на eventName по имени name = [data-$attrname]
@@ -134,7 +142,8 @@ export function getDynamicHandlers() {
 
 /** Запускает по интервалу сканирование классов для подключения 
  *  новых обработчиков если есть запрос на загрузку в 
- *  переменной requestOnLoad 
+ *  переменной requestOnLoad устанавливается через метод
+ *  setRequestOnLoad(true)
  * 
  * @param {type} delay интервал между запуском сканирования классов
  * @returns {undefined}
@@ -154,8 +163,13 @@ export function addDynamicElements(delay) {
     setInterval(resolve, delay);
 }
 
-
-
+/**Устанавливает listener(resolve) на событие eventName
+ * по itemId и прописывает data-listener=eventName для
+ * избежания повторной установки обработчика
+ * @param {*} itemId 
+ * @param {*} resolve 
+ * @param {*} eventName 
+ */
 export function addListener(itemId, resolve, eventName = 'click') {
     let element = document.getElementById(itemId);
     if (!element) return;
@@ -170,9 +184,10 @@ export function addListener(itemId, resolve, eventName = 'click') {
         element.dataset.listener = eventName + ' ';
 }
 
-/**
- * 
- * @param {type} element
+/**Устанавливает listener(resolve) на событие eventName
+ * по element(HTMLElement) и прописывает data-listener=eventName для
+ * избежания повторной установки обработчика
+ * @param {HTMLElement} element
  * @param {type} resolve
  * @param {type} eventName
  */
@@ -201,8 +216,8 @@ export async function execApi(formData, path, method = 'POST'){
 }
 
 /**
- * Выдает parent елемент который содержит
- * data-companent
+ * Выдает первый попавщийся parent 
+ * елемент который содержит data-companent
  * @param {*} el 
  * @returns 
  */
@@ -217,7 +232,11 @@ export const component = (el) =>{
 	}
 	return parent
 }
-
+/**
+ * Загрузка текста url по fetch 
+ * @param {*} url 
+ * @returns 
+ */
 export const loadText = async (url) =>{
 	const response = await fetch(url)
 	if (!response.ok) {

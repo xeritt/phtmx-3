@@ -2,6 +2,7 @@ async function load(){
 	const phtmx = await import(`./phtmx/core.js`)
 
 	const picsHandlers = () =>{
+		const picsPath = '/pics/'
 		phtmx.handler('data-log', (el) => {phtmx.log(el.dataset.log)})
 		
 		const listPictures = (el) => {
@@ -33,12 +34,12 @@ async function load(){
 			if (text){
 				let pics = text.split("\n");
 				let links = ''
-				let path = '/pics/'
+				//let path = '/pics/'
 				let buffer = listPictures(el)
 				pics.forEach(pic => {
 					if (pic) {
 						//links += link(pic, path + pic) 
-						buffer.append(link(pic, path + pic))
+						buffer.append(link(pic, picsPath + pic))
 						//links += br()
 					}
 				});
@@ -54,6 +55,8 @@ async function load(){
 			let pic = picture(comp)
 			pic.src = el.dataset.url
 			comp.dataset.current =  el.dataset.url
+			//let info = phtmx.data('info', comp)
+			//info.innerText = el.dataset.url
 			//return false
 		})
 
@@ -68,6 +71,8 @@ async function load(){
 				let pic = picture(comp)
 				pic.src = current.dataset.url
 				comp.dataset.current = current.dataset.url
+				//let info = phtmx.data('info', comp)
+				//info.innerText = current.dataset.url
 			}
 		})
 
@@ -82,6 +87,8 @@ async function load(){
 				let pic = picture(comp)
 				pic.src = current.dataset.url
 				comp.dataset.current = current.dataset.url
+				//let info = phtmx.data('info', comp)
+				//info.innerText = current.dataset.url
 			}
 		})
 
@@ -100,6 +107,8 @@ async function load(){
 					let pic = picture(comp)
 					pic.src = current.dataset.url
 					comp.dataset.current = current.dataset.url
+					//let info = phtmx.data('info', comp)
+					//info.innerText = current.dataset.url
 				}	
 			}
 		})
@@ -120,9 +129,19 @@ async function load(){
 					let pic = picture(comp)
 					pic.src = current.dataset.url
 					comp.dataset.current = current.dataset.url
+					//let info = phtmx.data('info', comp)
+					//info.innerText = current.dataset.url
 				}	
 			}
 		})
+
+		phtmx.on_by_name('load', 'pic', (el) => {
+			phtmx.log('load')
+			let comp = phtmx.component(el)
+			let info = phtmx.data('info', comp)
+			info.innerText = el.src
+		})	
+		
 	}
 	phtmx.setDebug(1)
 	phtmx.log('The page has fully loaded')
