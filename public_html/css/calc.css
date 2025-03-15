@@ -28,3 +28,7 @@
 .picture{
 	height: 400px;
 }
+
+.selected{
+	background-color: aqua;
+}

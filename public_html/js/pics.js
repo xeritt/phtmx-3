@@ -40,11 +40,29 @@ async function load(){
 			}
 		})
 
+		const addClass = (el, name) =>{
+			el.classList.add(name);
+		}
+
+		const removeClass = (el, name) =>{
+			el.classList.remove(name);
+		}
+
+		const removeClassAll = (name, dataName, doc) =>{
+			let list = phtmx.$$(dataName, doc)
+			list.forEach(el => {
+				el.classList.remove(name);
+			});
+			
+		}
+
 		phtmx.on_selector('click', '[data-piclink]', (el) => {
 			let comp = phtmx.component(el)
 			let pic = picture(comp)
 			pic.src = el.dataset.url
-			comp.dataset.current =  el.dataset.url
+			comp.dataset.current = el.dataset.url
+			removeClassAll('selected', '[data-piclink]', comp)
+			addClass(el, "selected")
 		})
 
 		phtmx.on_selector('click', '[data-btnend]', (el) => {
@@ -56,6 +74,8 @@ async function load(){
 				let pic = picture(comp)
 				pic.src = current.dataset.url
 				comp.dataset.current = current.dataset.url
+				removeClassAll('selected', '[data-piclink]', comp)
+				addClass(current, "selected")
 			}
 		})
 
@@ -68,6 +88,8 @@ async function load(){
 				let pic = picture(comp)
 				pic.src = current.dataset.url
 				comp.dataset.current = current.dataset.url
+				removeClassAll('selected', '[data-piclink]', comp)
+				addClass(current, "selected")
 			}
 		})
 
@@ -86,6 +108,8 @@ async function load(){
 					let pic = picture(comp)
 					pic.src = current.dataset.url
 					comp.dataset.current = current.dataset.url
+					removeClassAll('selected', '[data-piclink]', comp)
+					addClass(current, "selected")
 				}	
 			}
 		})
@@ -106,15 +130,20 @@ async function load(){
 					let pic = picture(comp)
 					pic.src = current.dataset.url
 					comp.dataset.current = current.dataset.url
+					removeClassAll('selected', '[data-piclink]', comp)
+					addClass(current, "selected")
 				}	
 			}
 		})
 
-		phtmx.on_by_name('load', 'pic', (el) => {
-			phtmx.log('load')
+		phtmx.on_by_name('load', 'pic', (el, event) => {
+			phtmx.log(el)
 			let comp = phtmx.component(el)
 			let info = phtmx.data('info', comp)
-			info.innerText = el.src
+
+			let text = `${el.src} <br /> height: ${el.naturalHeight} <br /> width: ${el.naturalWidth}`
+			//text += `<br />File size: ${el.size}`
+			info.innerHTML = text
 		})	
 		
 	}

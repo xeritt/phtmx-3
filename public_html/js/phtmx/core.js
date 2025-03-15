@@ -100,7 +100,7 @@ export const handler_once = (name, func) => { selector_handler_once(`[${name}]`,
  */
 export const on_by_name = (eventName, name, handler) => {
 	datas(name).forEach(el => {
-		addListenerElement(el, (e) => handler(el), eventName)
+		addListenerElement(el, (event) => handler(el, event), eventName)
 	})
 }
 
@@ -115,7 +115,7 @@ export const on_by_name = (eventName, name, handler) => {
  */
 export const on_selector = (eventName, name, handler) => {
 	$$(name).forEach(el => {
-		addListenerElement(el, (e) => handler(el), eventName)
+		addListenerElement(el, (event) => handler(el, event), eventName)
 	})
 }
 /* Загрузка обработчиков */
