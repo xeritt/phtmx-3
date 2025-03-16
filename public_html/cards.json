@@ -1,0 +1,14 @@
+[
+	{
+		"fname": "1",
+		"sname": "2",
+		"age": 12,
+		"mail": "hello@dot.com"
+	},
+	{
+		"fname": "12",
+		"sname": "22",
+		"age": 32,
+		"mail": "hello23@dot.com"
+	}
+]

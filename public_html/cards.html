@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<spin data-log="Core work done.."></spin>
+	<div class="cards" data-component="cards"  data-url="cards.json" data-template="players">
+		<template data-name="workers">
+			<div class="card" data-card="true">
+				<div data-name="fname"></div>
+				<div data-name="sname"></div>
+				<div data-name="age"></div>
+				<div data-name="mail"></div>
+			</div>
+		</template>
+		<template data-name="players">
+			<div class="card" data-card="true">
+				<div data-name="fname"></div>
+				<div data-name="age"></div>
+				<div data-name="mail"></div>
+			</div>
+		</template>
+	</div>
+	<script src='./js/cards.js'></script>
+</body>
+</html>

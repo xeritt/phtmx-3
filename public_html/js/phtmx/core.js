@@ -232,6 +232,7 @@ export const component = (el) => {
 	}
 	return parent
 }
+
 /**
  * Загрузка текста url по fetch 
  * @param {*} url 
@@ -240,11 +241,28 @@ export const component = (el) => {
 export const loadText = async (url) => {
 	const response = await fetch(url)
 	if (!response.ok) {
-		const message = `An error has occured: ${response.status} url: ${el.dataset.url}`;
+		const message = `An error has occured: ${response.status} url: ${url}`;
 		logerr(message)
-		return message;
+		return null;//message;
 	} else {
 		const text = await response.text();
 		return text
+	}
+}
+
+/**
+ * Загрузка json url по fetch 
+ * @param {*} url 
+ * @returns 
+ */
+export const loadJson = async (url) => {
+	const response = await fetch(url)
+	if (!response.ok) {
+		const message = `An error has occured json: ${response.status} url: ${url}`;
+		logerr(message)
+		return null;//message;
+	} else {
+		const json = await response.json();
+		return json
 	}
 }
