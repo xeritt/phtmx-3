@@ -7,7 +7,7 @@
 </head>
 <body>
 	<spin data-log="Core work done.."></spin>
-	<div class="cards" data-component="cards"  data-url="cards.json" data-template="players">
+	<div data-component="cards" data-url="cards.json" data-template="players" data-target="cards">
 		<template data-name="workers">
 			<div class="card" data-card="true">
 				<div data-name="fname"></div>
@@ -23,7 +23,12 @@
 				<div data-name="mail"></div>
 			</div>
 		</template>
+		<div class="cards" data-name="cards">
+		</div>
+		<button data-workers="true">W</button>
+		<button data-players="true">P</button>
 	</div>
+	
 	<button data-request="true">setRequestOnLoad</button>
 	<script src='./js/cards.js'></script>
 </body>
