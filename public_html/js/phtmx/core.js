@@ -1,5 +1,5 @@
 export const DEBUG = 0
-export const VERSION = 3.1;
+export const VERSION = 3.2;
 let debug = DEBUG;
 /** Служебные */
 export function version() { return VERSION }
@@ -44,9 +44,9 @@ const once = (el, name, func) => {
 	}
 	func(el);
 	if (el.dataset.handler)
-		el.dataset.handler += name + ' ';
+		el.dataset.handler += ' ' + name ;
 	else
-		el.dataset.handler = name + ' ';
+		el.dataset.handler = name //+ ' ';
 }
 
 /**
@@ -79,15 +79,14 @@ export const selector_handler_once = (name, func) => { $$(`${name}`).forEach(el 
 //export const handler = (name, func) =>{$$(`[${name}]`).forEach(e => func(e))}
 export const handler = (name, func) => { selector_handler(`[${name}]`, func) }
 
-
-//export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => {once(e, n, h)})}
 /**
  * Упрощенная версия selector_handler_once с [name] чтобы гарантировать поиск
  * только по атрибутам 
  * @param {*} name 
  * @param {*} func 
  */
-export const handler_once = (name, func) => { selector_handler_once(`[${name}]`, func) }
+export const handler_once = (n, h) =>{$$(`[${n}]`).forEach(e => {once(e, n, h)})}
+//export const handler_once = (name, func) => { selector_handler_once(`[${name}]`, func) }
 
 /**
  * Обработчик на eventName по имени data-name = name
@@ -177,11 +176,12 @@ export function addListener(itemId, resolve, eventName = 'click') {
 	if (element.dataset.listener) {
 		if (element.dataset.listener.indexOf(eventName) === 0) return;
 	}
+
 	element.addEventListener(eventName, resolve);
 	if (element.dataset.listener)
-		element.dataset.listener += eventName + ' ';
+		element.dataset.listener += ' ' + eventName;
 	else
-		element.dataset.listener = eventName + ' ';
+		element.dataset.listener = eventName;
 }
 
 /**Устанавливает listener(resolve) на событие eventName
@@ -196,6 +196,7 @@ export function addListenerElement(element, resolve, eventName = 'click') {
 		if (element.dataset.listener.indexOf(eventName) === 0) return;
 	}
 	log('Element Add Listener = ' + element.tagName);
+
 	element.addEventListener(eventName, resolve);
 	if (element.dataset.listener)
 		element.dataset.listener += ' ' + eventName;

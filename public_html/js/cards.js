@@ -8,7 +8,7 @@ async function load(){
 		phtmx.handler_once('data-template', async (el) => {
 			phtmx.log(`Load data from ${el.dataset.url}`)
 			let json = await phtmx.loadJson(el.dataset.url)
-			//phtmx.log(json)
+			phtmx.log(json)
 			if (json){
 				let template = phtmx.data(el.dataset.template, el)
 				json.forEach(item =>{
@@ -23,12 +23,17 @@ async function load(){
 				//phtmx.setRequestOnLoad(true)
 			}
 		})
+
+		phtmx.on_selector('click', '[data-request]', () => {
+			phtmx.log('click')
+			phtmx.setRequestOnLoad(true)
+		})
 	}
 
 	phtmx.setDebug(1)
 	phtmx.log('The page has fully loaded')
 	
-	//phtmx.setRequestOnLoad(true)
+	phtmx.setRequestOnLoad(true)
 	phtmx.setDynamicHandlers(cardsHandlers)
 	phtmx.addDynamicElements(500)
 }
