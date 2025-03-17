@@ -28,23 +28,6 @@ async function load(){
 
 		phtmx.handler_once('data-template', async (el) => {
 			loadData(el)
-			/*
-			phtmx.log(`Load data from ${el.dataset.url}`)
-			let json = await phtmx.loadJson(el.dataset.url)
-			phtmx.log(json)
-			if (json){
-				let template = phtmx.data(el.dataset.template, el)
-				json.forEach(item =>{
-					let clon = template.content.cloneNode(true);
-					let card = phtmx.$('[data-card]', clon)
-					let names = phtmx.$$('[data-name]', card)
-					//phtmx.log(names)
-					names.forEach(element => {element.innerText = item[element.dataset.name]});
-					el.appendChild(clon)
-				})
-				//phtmx.log(json)
-				//phtmx.setRequestOnLoad(true)
-			}*/
 		})
 
 		phtmx.on_selector('click', '[data-workers]', (el) => {
