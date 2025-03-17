@@ -48,6 +48,8 @@ async function load(){
 			phtmx.log('click')
 			//phtmx.setRequestOnLoad(true)
 		})
+
+		phtmx.addListener('test',()=>{alert('Hello')}, 'click')
 /*
 		let buttons = document.querySelectorAll('[data-request]')
 		const resolve = () =>{console.log('click')} 

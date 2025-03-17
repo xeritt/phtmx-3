@@ -1,5 +1,5 @@
 export const DEBUG = 0
-export const VERSION = 3.2;
+export const VERSION = 3.3;
 let debug = DEBUG;
 /** Служебные */
 export function version() { return VERSION }
@@ -163,28 +163,6 @@ export function addDynamicElements(delay) {
 }
 
 /**Устанавливает listener(resolve) на событие eventName
- * по itemId и прописывает data-listener=eventName для
- * избежания повторной установки обработчика
- * @param {*} itemId 
- * @param {*} resolve 
- * @param {*} eventName 
- */
-export function addListener(itemId, resolve, eventName = 'click') {
-	let element = document.getElementById(itemId);
-	if (!element) return;
-	//if (element.dataset.listener == eventName) return;
-	if (element.dataset.listener) {
-		if (element.dataset.listener.indexOf(eventName) === 0) return;
-	}
-
-	element.addEventListener(eventName, resolve);
-	if (element.dataset.listener)
-		element.dataset.listener += ' ' + eventName;
-	else
-		element.dataset.listener = eventName;
-}
-
-/**Устанавливает listener(resolve) на событие eventName
  * по element(HTMLElement) и прописывает data-listener=eventName для
  * избежания повторной установки обработчика
  * @param {HTMLElement} element
@@ -202,6 +180,20 @@ export function addListenerElement(element, resolve, eventName = 'click') {
 		element.dataset.listener += ' ' + eventName;
 	else
 		element.dataset.listener = eventName;
+}
+
+/**Устанавливает listener(resolve) на событие eventName
+ * по itemId и прописывает data-listener=eventName для
+ * избежания повторной установки обработчика
+ * @param {*} itemId 
+ * @param {*} resolve 
+ * @param {*} eventName 
+ */
+export function addListener(itemId, resolve, eventName = 'click') {
+	let element = document.getElementById(itemId);
+	if (!element) return;
+	//if (element.dataset.listener == eventName) return;
+	addListenerElement(element, resolve, eventName)
 }
 
 export async function execApi(formData, path, method = 'POST') {
