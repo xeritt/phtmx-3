@@ -3,11 +3,12 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel='stylesheet' type='text/css' media='screen' href='/css/cards.css'>
 	<title>Document</title>
 </head>
 <body>
 	<spin data-log="Core work done.."></spin>
-	<div data-component="cards" data-url="cards.json" data-template="players" data-target="cards">
+	<div data-component="cards" data-url="cards.json" data-template="players" data-target="cards" data-buffer="buffer">
 		<template data-name="workers">
 			<div class="card" data-card="true">
 				<div data-name="fname"></div>
@@ -23,6 +24,7 @@
 				<div data-name="mail"></div>
 			</div>
 		</template>
+		<div data-name="buffer" style="display:none"></div>
 		<div class="cards" data-name="cards">
 		</div>
 		<button data-workers="true">W</button>

@@ -7,7 +7,14 @@ async function load(){
 
 		const loadData = async (el) =>{
 			phtmx.log(`Load data from ${el.dataset.url}`)
-			let json = await phtmx.loadJson(el.dataset.url)
+			let buffer = phtmx.data(el.dataset.buffer)
+			let json
+			if (buffer.innerText) {
+				json = JSON.parse(buffer.innerText)
+			} else {
+				json = await phtmx.loadJson(el.dataset.url)
+				buffer.innerText = JSON.stringify(json)
+			}
 			phtmx.log(json)
 			if (json){
 				//el.replaceChildren();
@@ -44,12 +51,13 @@ async function load(){
 			loadData(comp)
 		})
 
+
+		phtmx.addListener('test',()=>{alert('Hello')}, 'click')
+
 		phtmx.on_selector('click', '[data-request]', () => {
 			phtmx.log('click')
 			//phtmx.setRequestOnLoad(true)
 		})
-
-		phtmx.addListener('test',()=>{alert('Hello')}, 'click')
 /*
 		let buttons = document.querySelectorAll('[data-request]')
 		const resolve = () =>{console.log('click')} 
