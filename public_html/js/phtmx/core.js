@@ -219,7 +219,7 @@ export const component = (el) => {
 	if (el.dataset?.component) return el;
 
 	let parent = el.parentElement
-	while (parent.nodeName != 'BODY') {
+	while (parent.nodeName.toUpperCase() != 'BODY') {
 		if (parent.dataset?.component) break
 		parent = parent.parentElement
 	}
