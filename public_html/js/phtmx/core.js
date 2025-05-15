@@ -211,7 +211,7 @@ export async function execApi(formData, path, method = 'POST') {
 /**
  * Выдает первый попавщийся parent 
  * елемент который содержит data-companent
- * @param {*} el id="test">Test</button>
+ * @param {HTMLElement} el
  * @returns 
  */
 export const component = (el) => {
